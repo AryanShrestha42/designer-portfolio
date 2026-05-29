@@ -37,14 +37,17 @@ function Sticker({ label, shape, layout, accent }) {
   const [t, setT] = useState({ x: 0, y: 0, r: 0, s: 1 })
 
   useEffect(() => {
-    const onMove = (e) => {
+    // Skip on touch-primary devices (iPhones, Android) — no hover capability
+    if (window.matchMedia('(hover: none)').matches) return
+
+    const update = (clientX, clientY) => {
       const el = ref.current
       if (!el) return
       const rect = el.getBoundingClientRect()
       const cx = rect.left + rect.width / 2
       const cy = rect.top + rect.height / 2
-      const dx = e.clientX - cx
-      const dy = e.clientY - cy
+      const dx = clientX - cx
+      const dy = clientY - cy
       const dist = Math.hypot(dx, dy)
       const radius = 200
       if (dist < radius) {
@@ -54,8 +57,21 @@ function Sticker({ label, shape, layout, accent }) {
         setT({ x: 0, y: 0, r: 0, s: 1 })
       }
     }
-    document.addEventListener('mousemove', onMove)
-    return () => document.removeEventListener('mousemove', onMove)
+
+    const onMove  = (e) => update(e.clientX, e.clientY)
+    const onTouch = (e) => {
+      if (e.touches.length) update(e.touches[0].clientX, e.touches[0].clientY)
+    }
+    const onTouchEnd = () => setT({ x: 0, y: 0, r: 0, s: 1 })
+
+    document.addEventListener('mousemove', onMove, { passive: true })
+    document.addEventListener('touchmove', onTouch, { passive: true })
+    document.addEventListener('touchend',  onTouchEnd)
+    return () => {
+      document.removeEventListener('mousemove', onMove)
+      document.removeEventListener('touchmove', onTouch)
+      document.removeEventListener('touchend',  onTouchEnd)
+    }
   }, [])
 
   return (

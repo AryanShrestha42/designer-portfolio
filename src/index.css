@@ -607,3 +607,74 @@ footer{
 .lb-prev{left:20px;}.lb-next{right:20px;}
 .p-card img{cursor:zoom-in;transition:transform .3s ease,filter .3s ease;}
 .p-card img:hover{transform:scale(1.02);filter:brightness(1.05);}
+
+/* ═══════════════════════════════════════════════
+   MOBILE — 768px: mobile-friendly scroll hero
+   ═══════════════════════════════════════════════ */
+@media (max-width: 768px) {
+  /* Hero: shorter scroll journey, no heavy 3D elements */
+  #hero.hero-magic       { height: 180vh; }
+  .hero-sticky           { padding: 80px 20px 24px; }
+
+  /* Hide the 3D cube (perspective/GPU-heavy, clips on narrow screens) */
+  .hero-cube-wrap        { display: none !important; }
+  /* Hide orbit field (460px SVG wider than phone screen) */
+  .hero-orb-anchor       { display: none !important; }
+
+  /* Process headline + marquee stay — just fix their padding */
+  .hero-process-anchor   { padding: 0 20px; }
+
+  /* Cue & orb sizes */
+  .hero-cue              { left: 20px; bottom: 24px; }
+  .h-orb1                { width: 300px; height: 300px; top: -60px; right: -60px; }
+  .h-orb2                { width: 240px; height: 240px; bottom: -40px; left: -40px; }
+
+  /* Typography */
+  .h-name                { font-size: clamp(44px, 12vw, 72px); margin-bottom: 20px; }
+  .h-sub                 { margin-bottom: 32px; }
+  .hero-process-title    { font-size: clamp(36px, 9.5vw, 52px); }
+  .hero-process-sub      { font-size: 14px; }
+
+  /* Work / Skills already 1-col from 960px breakpoint */
+  .p-grid                { grid-template-columns: 1fr; }
+  .p-card.big            { grid-column: span 1; }
+
+  /* Playground */
+  #playground            { padding: 72px 20px 0; }
+  .pg-head               { grid-template-columns: 1fr; gap: 24px; }
+}
+
+/* ═══════════════════════════════════════════════
+   MOBILE — 480px: small phones
+   ═══════════════════════════════════════════════ */
+@media (max-width: 480px) {
+  nav                    { padding: 0 16px; }
+  section                { padding: 60px 16px; }
+  #playground            { padding: 60px 16px 0; }
+  footer                 { padding: 16px; }
+
+  .hero-sticky           { padding: 72px 16px 20px; }
+  .hero-cue              { left: 16px; }
+  .h-name                { font-size: clamp(38px, 10.5vw, 56px); }
+  .h-sub                 { font-size: 14px; }
+
+  /* Nav: hide links at 480 too (already hidden at 520, keep safe) */
+  .nav-links             { display: none; }
+
+  /* Sticker wall → static flex grid (absolute positions won't work well) */
+  .sticker-wall {
+    height: auto;
+    min-height: 180px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    padding: 16px;
+    align-content: flex-start;
+    align-items: flex-start;
+  }
+  .sticker               { position: static !important; }
+
+  /* Tighten titles and stats */
+  .s-title               { font-size: clamp(28px, 8vw, 40px); margin-bottom: 32px; }
+  .a-n                   { font-size: 34px; }
+}

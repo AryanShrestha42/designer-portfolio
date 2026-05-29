@@ -19,30 +19,31 @@ export default function Hero() {
   })
 
   // Phase A — title block
-  const titleY       = useTransform(sp, [0, 0.5], [0, -180])
-  const titleScale   = useTransform(sp, [0, 0.5], [1, 0.7])
-  const titleOpacity = useTransform(sp, [0, 0.32, 0.5], [1, 1, 0])
-  const subOpacity   = useTransform(sp, [0, 0.22], [1, 0])
+  const titleY       = useTransform(sp, [0, 0.42], [0, -160])
+  const titleScale   = useTransform(sp, [0, 0.42], [1, 0.75])
+  const titleOpacity = useTransform(sp, [0, 0.26, 0.42], [1, 1, 0])
+  const subOpacity   = useTransform(sp, [0, 0.18], [1, 0])
 
-  // Phase A→B — cube floats out then dissolves
-  const cubeX       = useTransform(sp, [0, 0.5], ['0%', '-30%'])
-  const cubeY       = useTransform(sp, [0, 0.45], [0, 80])
-  const cubeScale   = useTransform(sp, [0, 0.45], [1, 1.45])
-  const cubeOpacity = useTransform(sp, [0, 0.5, 0.62], [1, 1, 0])
+  // Phase A→B — cube begins fading at 0.22, fully GONE by 0.46
+  // (no overlap with process headline — clean scene cut)
+  const cubeX       = useTransform(sp, [0, 0.44], ['0%', '-22%'])
+  const cubeY       = useTransform(sp, [0, 0.40], [0, 56])
+  const cubeScale   = useTransform(sp, [0, 0.40], [1, 1.30])
+  const cubeOpacity = useTransform(sp, [0.20, 0.46], [1, 0])
 
-  // Phase B — orbital field takes the stage
-  const orbScale   = useTransform(sp, [0.32, 0.6], [0.55, 1])
-  const orbOpacity = useTransform(sp, [0.32, 0.55, 0.85, 1], [0, 1, 1, 0])
+  // Phase B — orbital field blooms in as cube exits
+  const orbScale   = useTransform(sp, [0.28, 0.56], [0.55, 1])
+  const orbOpacity = useTransform(sp, [0.28, 0.50, 0.85, 1], [0, 1, 1, 0])
 
-  // Phase B — process headline
-  const procOpacity = useTransform(sp, [0.5, 0.66], [0, 1])
-  const procY       = useTransform(sp, [0.5, 0.66], [50, 0])
-  const procExit    = useTransform(sp, [0.86, 1], [0, -60])
-  const procExitOp  = useTransform(sp, [0.86, 1], [1, 0])
+  // Phase B — process headline starts at 0.46 (cube is fully gone)
+  const procOpacity = useTransform(sp, [0.46, 0.62], [0, 1])
+  const procY       = useTransform(sp, [0.46, 0.62], [44, 0])
+  const procExit    = useTransform(sp, [0.84, 1], [0, -60])
+  const procExitOp  = useTransform(sp, [0.84, 1], [1, 0])
 
   // Phase C — marquee reveal
-  const marqOpacity = useTransform(sp, [0.78, 0.92], [0, 1])
-  const marqY       = useTransform(sp, [0.78, 0.92], [40, 0])
+  const marqOpacity = useTransform(sp, [0.76, 0.90], [0, 1])
+  const marqY       = useTransform(sp, [0.76, 0.90], [40, 0])
 
   // Subtle mouse parallax on background orbs (single rAF loop, scoped to hero)
   useEffect(() => {
